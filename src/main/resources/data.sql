@@ -33,7 +33,7 @@ INSERT INTO goods (brand, price, category, ins_oprt, upd_oprt) VALUES
 ('D', 2500, '가방', 'system', 'system'),
 ('D', 1500, '모자', 'system', 'system'),
 ('D', 2400, '양말', 'system', 'system'),
-('D', 2200, '액세서리', 'system', 'system'),
+('D', 2000, '액세서리', 'system', 'system'),
 
 ('E', 10700, '상의', 'system', 'system'),
 ('E', 5000, '아우터', 'system', 'system'),
@@ -42,9 +42,9 @@ INSERT INTO goods (brand, price, category, ins_oprt, upd_oprt) VALUES
 ('E', 2300, '가방', 'system', 'system'),
 ('E', 1800, '모자', 'system', 'system'),
 ('E', 2100, '양말', 'system', 'system'),
-('E', 2300, '액세서리', 'system', 'system'),
+('E', 2100, '액세서리', 'system', 'system'),
 
-('F', 11000, '상의', 'system', 'system'),
+('F', 11200, '상의', 'system', 'system'),
 ('F', 7200, '아우터', 'system', 'system'),
 ('F', 4000, '바지', 'system', 'system'),
 ('F', 9300, '스니커즈', 'system', 'system'),
