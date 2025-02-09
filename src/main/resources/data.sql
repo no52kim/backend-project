@@ -1,3 +1,6 @@
+INSERT INTO category (category) VALUES ('상의'), ('아우터'), ('바지'), ('스니커즈'), ('가방'), ('모자'), ('양말'), ('액세서리');
+
+
 INSERT INTO goods (brand, price, category, ins_oprt, upd_oprt) VALUES
 ('A', 11200, '상의', 'system', 'system'),
 ('A', 5500, '아우터', 'system', 'system'),

@@ -1,3 +1,8 @@
+CREATE TABLE IF NOT EXISTS category (
+    category VARCHAR(255) NOT NULL,
+    PRIMARY KEY (category)
+);
+
 CREATE TABLE IF NOT EXISTS goods
 (
     id bigint NOT NULL AUTO_INCREMENT,
@@ -8,5 +13,7 @@ CREATE TABLE IF NOT EXISTS goods
     ins_oprt VARCHAR(255),
     upd_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     upd_oprt VARCHAR(255),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+
+    CONSTRAINT FK_GOODS_CATEGORY FOREIGN KEY (category) REFERENCES category(category)
 );
