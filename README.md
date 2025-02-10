@@ -86,6 +86,8 @@ DELETE /api/category/goods/{id}
 ```
 
 ## 데이터베이스 스키마
+### H2 local webconsole : http://localhost:8089
+
 ```
 CREATE TABLE IF NOT EXISTS category (
     category VARCHAR(255) NOT NULL,
