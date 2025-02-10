@@ -16,7 +16,7 @@ public class CommonResponse<T> {
 
     public static <T> CommonResponse<T> success(T data) {
         return CommonResponse.<T>builder()
-                .code(200)
+                .code(RequestErrorCode.SUCCESS)
                 .message("Success")
                 .data(data)
                 .build();

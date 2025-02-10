@@ -29,7 +29,7 @@ public interface GoodsRepository extends ReactiveCrudRepository<Goods, Long> {
     "FROM (SELECT category, brand, price, ROW_NUMBER() OVER (ORDER BY price DESC, brand DESC) AS rn " +
     "      FROM goods WHERE category = :category) " +
     "WHERE rn = 1")
-    Flux<Goods> findMinMaxPriceGoodsByCategory(@Param("category") String category);
+    Flux<Goods> findLowestAndHighestPriceGoodsByCategory(@Param("category") String category);
 
     @Query("WITH CategoryMinPrices AS ( " +
             "    SELECT brand, category, MIN(price) as min_price " +
@@ -52,5 +52,5 @@ public interface GoodsRepository extends ReactiveCrudRepository<Goods, Long> {
             "FROM CategoryMinPrices cmp " +
             "WHERE cmp.brand = (SELECT brand FROM MinBrand) " +
             "ORDER BY cmp.category")
-    Flux<Goods> findMinPriceBrandGoods();
+    Flux<Goods> findLowestPriceBrandGoods();
 }

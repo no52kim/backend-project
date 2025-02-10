@@ -13,7 +13,7 @@ import java.util.List;
 public class LowestPriceGoodsResponse {
 
     @JsonProperty("최저가")
-    private List<LowestPriceGoodsDto> lowPriceList;
+    private List<LowestPriceGoodsDto> lowestPriceList;
 
     @JsonProperty("총액")
     private BigDecimal totalPrice;

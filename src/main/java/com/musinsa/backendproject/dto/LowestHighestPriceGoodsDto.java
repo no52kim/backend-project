@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-public class HighLowPriceGoodsDto {
+public class LowestHighestPriceGoodsDto {
 
     @JsonProperty("브랜드")
     private String brand;

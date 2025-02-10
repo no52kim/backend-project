@@ -4,7 +4,7 @@ import com.musinsa.backendproject.common.CommonResponse;
 import com.musinsa.backendproject.dto.request.GoodsRequest;
 import com.musinsa.backendproject.dto.response.LowestPriceBrandGoodsResponse;
 import com.musinsa.backendproject.dto.response.LowestPriceGoodsResponse;
-import com.musinsa.backendproject.dto.response.HighLowPriceGoodsResponse;
+import com.musinsa.backendproject.dto.response.LowestHighestPriceGoodsResponse;
 import com.musinsa.backendproject.exception.RequestExceptionHandler;
 import com.musinsa.backendproject.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +25,9 @@ public class CategoryController {
                 .onErrorResume(RequestExceptionHandler::handleError);
     }
 
-    @GetMapping("/{category}/high-low-price-goods")
-    public Mono<CommonResponse<HighLowPriceGoodsResponse>> getCategoryPriceRange(
-            @PathVariable String category) {
-        return CategoryService.getHighLowPriceGoods(category)
+    @GetMapping("/{category}/lowest-highest-price-goods")
+    public Mono<CommonResponse<LowestHighestPriceGoodsResponse>> getLowestAndHighestPriceGoods(@PathVariable String category) {
+        return CategoryService.getLowestAndHighestPriceGoods(category)
                 .map(CommonResponse::success)
                 .onErrorResume(RequestExceptionHandler::handleError);
     }

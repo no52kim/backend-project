@@ -1,9 +1,9 @@
 package com.musinsa.backendproject.service;
 
-import com.musinsa.backendproject.dto.HighLowPriceGoodsDto;
+import com.musinsa.backendproject.dto.LowestHighestPriceGoodsDto;
 import com.musinsa.backendproject.dto.LowestPriceBrandGoodsDto;
 import com.musinsa.backendproject.dto.LowestPriceGoodsDto;
-import com.musinsa.backendproject.dto.response.HighLowPriceGoodsResponse;
+import com.musinsa.backendproject.dto.response.LowestHighestPriceGoodsResponse;
 import com.musinsa.backendproject.dto.response.LowestPriceBrandGoodsResponse;
 import com.musinsa.backendproject.dto.response.LowestPriceGoodsResponse;
 import com.musinsa.backendproject.exception.DatabaseException;
@@ -34,35 +34,33 @@ public class CategoryService {
                         .build())
                 .collectList()
                 .map(list -> LowestPriceGoodsResponse.builder()
-                        .lowPriceList(list)
+                        .lowestPriceList(list)
                         .totalPrice(list.stream().map(LowestPriceGoodsDto::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add))
                         .build())
                 .onErrorMap(DataAccessException.class, throwable -> new DatabaseException("데이터베이스 처리 중 오류가 발생했습니다."));
     }
 
-    public Mono<HighLowPriceGoodsResponse> getHighLowPriceGoods(String category) {
-        return goodsRepository.findMinMaxPriceGoodsByCategory(category)
-                .map(goods -> HighLowPriceGoodsDto.builder()
+    public Mono<LowestHighestPriceGoodsResponse> getLowestAndHighestPriceGoods(String category) {
+        return goodsRepository.findLowestAndHighestPriceGoodsByCategory(category)
+                .map(goods -> LowestHighestPriceGoodsDto.builder()
                         .brand(goods.getBrand())
                         .price(goods.getPrice())
                         .build())
+                .sort((o1, o2) -> o2.getPrice().compareTo(o1.getPrice()))
                 .collectList()
-                .map(list -> {
-                    List<HighLowPriceGoodsDto> priceGoodsDtoList = list.stream().sorted((o1, o2) -> o2.getPrice().compareTo(o1.getPrice())).toList();
-
-                    return HighLowPriceGoodsResponse.builder()
-                            .category(category)
-                            .highPriceList(priceGoodsDtoList.subList(0, 1))
-                            .lowPriceList(priceGoodsDtoList.subList(1, 2))
-                            .build();
-                })
+                .map(list -> LowestHighestPriceGoodsResponse.builder()
+                                .category(category)
+                                .highestPriceList(!list.isEmpty() ? list.subList(0, 1) : List.of())
+                                .lowestPriceList(list.size() > 1 ? list.subList(1, 2) : List.of())
+                                .build()
+                )
                 .onErrorMap(DataAccessException.class, throwable -> new DatabaseException("데이터베이스 처리 중 오류가 발생했습니다."));
     }
 
     public Mono<LowestPriceBrandGoodsResponse> getLowestPriceBrandGoods() {
         AtomicReference<String> brand = new AtomicReference<>("");
 
-        return goodsRepository.findMinPriceBrandGoods()
+        return goodsRepository.findLowestPriceBrandGoods()
                 .doOnNext(goods -> brand.set(goods.getBrand()))
                 .map(goods -> LowestPriceBrandGoodsDto.builder().category(goods.getCategory()).price(goods.getPrice()).build())
                 .collectList()
