@@ -22,9 +22,10 @@
 
 ### 3. 주요 포인트
 1. Reactive Programming을 활용한 비동기 처리를 사용하였습니다. 작은 서비스라면 러닝 커브 및 익숙하여 개발 속도가 빠른 Spring MVC를 사용해서 빠르게 서비스를 구축 후, 트래픽에 따라 필요한 만큼 서버 리소스를 Scale-out하는 방식이 더욱 좋겠지만 무신사와 같은 업계 최상위의 트래픽을 처리해야하는 서비스에서는 개발 단계에서부터 트래픽 처리에 대한 고려가 필요하다고 생각합니다. 따라서, 개발 공수가 더 들더라도 적은 리소스로 효율적인 트래픽 처리가 가능한 Spring Webflux를 적용하여 개발했습니다.
-2. 간단한 Exception Handler 및 에러 이벤트 처리를 통해 Database 에러와 일반 Exception 처리를 구분하여 Front에서 에러 케이스를 인지할 수 있도록 하였습니다.
-3. Blocking으로 동작하는 JPA를 사용하지않고 Non-blocking을 지원하는 R2DBC를 통해 동적 쿼리를 사용하여 Repository 계층을 구현하였습니다.
+2. Blocking으로 동작하는 JPA를 사용하지않고 Non-blocking을 지원하는 R2DBC를 통해 동적 쿼리를 사용하여 Repository 계층을 구현하였습니다.
+3. Query로 해결할 수 있는 부분은 Query를 통해서 결과를 얻어온 후 변환과 단순 합계같은 부수적인 작업만 코드에서 처리하도록 하였습니다. DB를 최대한 활용하고 Service에서는 최적화된 결과를 기반으로 처리하여 불필요한 연산을 줄였습니다.
 4. GOODS 테이블과 CATEGORY 테이블을 분리하여 CATEGORY 테이블의 category (카테고리명)와 goods 테이블의 category에 fk를 설정하여 상품 추가/수정 시 잘못된 카테고리가 입력된 경우를 방지하였습니다.
+5. 간단한 Exception Handler 및 에러 이벤트 처리를 통해 Database 에러와 일반 Exception 처리를 구분하여 Front에서 에러 케이스를 인지할 수 있도록 하였습니다.
 
 ## 빌드 관련 정보
 
