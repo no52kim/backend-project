@@ -28,14 +28,14 @@ public class CategoryService {
     public Mono<LowestPriceGoodsResponse> getLowestPriceGoods() {
         return goodsRepository.findLowestPriceGoodsByAllCategories()
                 .map(goods -> LowestPriceGoodsDto.builder()
-                        .카테고리(goods.getCategory())
-                        .브랜드(goods.getBrand())
-                        .가격(goods.getPrice())
+                        .category(goods.getCategory())
+                        .brand(goods.getBrand())
+                        .price(goods.getPrice())
                         .build())
                 .collectList()
                 .map(list -> LowestPriceGoodsResponse.builder()
-                        .최저가(list)
-                        .총액(list.stream().map(LowestPriceGoodsDto::get가격).reduce(BigDecimal.ZERO, BigDecimal::add))
+                        .lowPriceList(list)
+                        .totalPrice(list.stream().map(LowestPriceGoodsDto::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add))
                         .build())
                 .onErrorMap(DataAccessException.class, throwable -> new DatabaseException("데이터베이스 처리 중 오류가 발생했습니다."));
     }
@@ -43,17 +43,17 @@ public class CategoryService {
     public Mono<HighLowPriceGoodsResponse> getHighLowPriceGoods(String category) {
         return goodsRepository.findMinMaxPriceGoodsByCategory(category)
                 .map(goods -> HighLowPriceGoodsDto.builder()
-                        .브랜드(goods.getBrand())
-                        .가격(goods.getPrice())
+                        .brand(goods.getBrand())
+                        .price(goods.getPrice())
                         .build())
                 .collectList()
                 .map(list -> {
-                    List<HighLowPriceGoodsDto> priceGoodsDtoList = list.stream().sorted((o1, o2) -> o2.get가격().compareTo(o1.get가격())).toList();
+                    List<HighLowPriceGoodsDto> priceGoodsDtoList = list.stream().sorted((o1, o2) -> o2.getPrice().compareTo(o1.getPrice())).toList();
 
                     return HighLowPriceGoodsResponse.builder()
-                            .카테고리(category)
-                            .최고가(priceGoodsDtoList.subList(0, 1))
-                            .최저가(priceGoodsDtoList.subList(1, 2))
+                            .category(category)
+                            .highPriceList(priceGoodsDtoList.subList(0, 1))
+                            .lowPriceList(priceGoodsDtoList.subList(1, 2))
                             .build();
                 })
                 .onErrorMap(DataAccessException.class, throwable -> new DatabaseException("데이터베이스 처리 중 오류가 발생했습니다."));
@@ -64,17 +64,17 @@ public class CategoryService {
 
         return goodsRepository.findMinPriceBrandGoods()
                 .doOnNext(goods -> brand.set(goods.getBrand()))
-                .map(goods -> LowestPriceBrandGoodsDto.builder().카테고리(goods.getCategory()).가격(goods.getPrice()).build())
+                .map(goods -> LowestPriceBrandGoodsDto.builder().category(goods.getCategory()).price(goods.getPrice()).build())
                 .collectList()
                 .map(list -> {
                     LowestPriceBrandGoodsResponse.LowestBrand lowestBrand = LowestPriceBrandGoodsResponse.LowestBrand.builder()
-                            .브랜드(brand.get())
-                            .카테고리(list)
-                            .총액(list.stream().map(LowestPriceBrandGoodsDto::get가격).reduce(BigDecimal.ZERO, BigDecimal::add))
+                            .brand(brand.get())
+                            .category(list)
+                            .totalPrice(list.stream().map(LowestPriceBrandGoodsDto::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add))
                             .build();
 
                     return LowestPriceBrandGoodsResponse.builder()
-                            .최저가(lowestBrand)
+                            .lowestBrand(lowestBrand)
                             .build();
                 })
                 .onErrorMap(DataAccessException.class, throwable -> new DatabaseException("데이터베이스 처리 중 오류가 발생했습니다."));

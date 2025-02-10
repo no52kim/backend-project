@@ -1,7 +1,7 @@
 package com.musinsa.backendproject.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.musinsa.backendproject.dto.LowestPriceBrandGoodsDto;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,13 +12,20 @@ import java.util.List;
 @Builder
 public class LowestPriceBrandGoodsResponse {
 
-    private LowestBrand 최저가;
+    @JsonProperty("최저가")
+    private LowestBrand lowestBrand;
 
     @Data
     @Builder
     public static class LowestBrand {
-        private String 브랜드;
-        private List<LowestPriceBrandGoodsDto> 카테고리;
-        private BigDecimal 총액;
+
+        @JsonProperty("브랜드")
+        private String brand;
+
+        @JsonProperty("카테고리")
+        private List<LowestPriceBrandGoodsDto> category;
+
+        @JsonProperty("총액")
+        private BigDecimal totalPrice;
     }
 }

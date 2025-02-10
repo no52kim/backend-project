@@ -15,7 +15,8 @@
 - R2DBC
 - H2 Database
 - Gradle
-- lombok
+- Lombok
+- Swagger
 
 ### 3. 주요 포인트
 1. Reactive Programming을 활용한 비동기 처리를 사용하였습니다. 작은 서비스라면 러닝 커브 및 익숙하여 개발 속도가 빠른 Spring MVC를 사용해서 빠르게 서비스를 구축 후, 트래픽에 따라 필요한 만큼 서버 리소스를 Scale-out하는 방식이 더욱 좋겠지만 무신사와 같은 업계 최상위의 트래픽을 처리해야하는 서비스에서는 개발 단계에서부터 트래픽 처리에 대한 고려가 필요하다고 생각합니다. 따라서, 개발 공수가 더 들더라도 적은 리소스로 효율적인 트래픽 처리가 가능한 Spring Webflux를 적용하여 개발했습니다.
@@ -41,18 +42,19 @@
 ```
 
 ## API 명세
+### Swagger : http://localhost:8080/swagger-ui/index.html
 
-### 1. 전체 카테고리 최저가 조회
+### 1. 카테고리별 최저가격인 브랜드와 상품 가격과 총액 조회
 ```
 GET /api/category/lowest-price-goods
 ```
 
-### 2. 카테고리별 최고/최저가 조회
+### 2. 특정 카테고리에서 최저/최고가 브랜드 및 가격 조회
 ```
 GET /api/category/{category}/high-low-price-goods
 ```
 
-### 3. 브랜드별 카테고리 최저가 합산 조회
+### 3. 단일 브랜드로 전체 카테고리 구매 시 최저가 브랜드와 상품 가격 조회
 ```
 GET /api/category/lowest-price-brand-goods
 ```

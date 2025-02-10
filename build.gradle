@@ -29,11 +29,15 @@ dependencies {
 	implementation 'io.r2dbc:r2dbc-h2'
 	implementation 'com.h2database:h2'
 
+	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.4'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.mockito:mockito-junit-jupiter'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
