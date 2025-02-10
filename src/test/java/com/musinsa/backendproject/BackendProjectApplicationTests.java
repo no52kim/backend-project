@@ -1,4 +1,4 @@
-package com.musinsa.backend_service;
+package com.musinsa.backendproject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
